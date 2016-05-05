@@ -1246,7 +1246,7 @@ function removeElement(_element){
  */
 function showPetals(){
     setInterval(function(){
-        urlArr = ["Public/images/petal1.png","Public/images/petal2.png","Public/images/petal3.png","Public/images/petal4.png","Public/images/petal5.png","Public/images/petal6.png"];
+        urlArr = ["images/petal1.png","images/petal2.png","images/petal3.png","images/petal4.png","images/petal5.png","images/petal6.png"];
         urlIndex = Math.floor(Math.random()*6);
         url = urlArr[urlIndex];
         var petalNode = document.createElement("div");
