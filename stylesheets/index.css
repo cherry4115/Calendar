@@ -1,0 +1,75 @@
+/*
+* 样式表，针对PC页面
+*/
+
+*{ padding: 0; margin: 0; }
+.wrapper{ width: 575px; margin: 50px auto 0 auto; border: 2px outset rgb(177,25,26); background-color: #fff; }
+.wrapper:after{ content:'\20'; display:block; height:0; clear:both; }
+.left{ float: left; width: 405px; padding: 10px; }
+.right{ padding: 10px; float: right; width: 130px; height: 474px; background-color: rgb(177,25,26); }
+.header{ height: 50px; border-bottom: 1px solid rgb(177,25,26); }
+
+/*头部*/
+.header .select{ position: relative; margin: 7px 20px 0 0; float: left; border-top: 1px solid #7b7b7b; border-left: 1px solid #7b7b7b; border-right: 1px solid #7b7b7b; border-bottom: 1px solid #adadad; }
+.header .select:after{ content:'\20'; display:block; height:0; clear:both; }
+.header .select div{ float: left; }
+.header .select .pre{ cursor: pointer; width: 25px; height: 25px; line-height: 25px; text-align: center; border-right: 1px solid #adadad; }
+.header .select .pre:hover{ background-color: #e0e0e0; }
+.header .select .next{ cursor: pointer; width: 25px; height: 25px; line-height: 25px; text-align: center; border-left: 1px solid #adadad; }
+.header .select .next:hover{ background-color: #e0e0e0; }
+.header .select .current .number{ cursor: default; text-indent: 10px; float: left; display: inline-block; width: 50px; height: 25px; line-height: 25px; font-size: 0.8em; }
+.header .select .current .arrow{ cursor: default; float: left; display: inline-block; width: 25px; height: 25px; background: url(../images/arrow.png) no-repeat 7px 7px; }
+.header .select .year .number{ width: 55px; }
+.header .select .month .number{ width: 40px; }
+.header .goToday{ cursor: pointer; margin-top: 7px; float: right; border: 1px solid #adadad; font-size: 0.8em; width: 70px; height: 25px; line-height: 25px; text-align: center; }
+.header .goToday:hover{ background-color: #e0e0e0; }
+.header .select .dropDown{ z-index: 10; background-color: #fff; position: absolute; font-size: 0.8em; border: 1px solid #adadad; border-top: none; top: 26px; left: 25px; }
+.header .select .dropDown ul{ list-style: none; }
+.header .select .dropDown ul li{ cursor: pointer; height: 25px; line-height: 25px; text-indent: 10px; }
+.header .select .dropDown ul li:hover{ background-color: #e0e0e0; }
+.header .select .dropDownYear{ width: 80px; height: 300px; overflow-y: auto; }
+.header .select .dropDownMonth{ width: 65px; }
+.header .timeDiv2{ display: none; }
+
+/*日期区*/
+.main table{ width: 100%; }
+.main tr{ display: block; border-bottom: 1px solid #8e8e8e; }
+.main tr:last-child{ border-bottom: none; }
+.main th{ width: 55px; height: 35px; line-height: 35px; text-align: center; font-weight: normal; }
+.main tr th:nth-child(6){ color: rgb(177,25,26); }
+.main tr th:nth-child(7){ color: rgb(177,25,26); }
+.main td{ cursor: pointer; position: relative; width: 55px; height: 55px; border-spacing: 0; text-align: center; }
+.main td:hover{ width: 51px; height: 51px; border: 2px solid #eac100; }
+.main td:hover .dayoffLabel{ top: -2px; left: -2px; }
+.main td:hover .dayOnLabel{ top: -2px; left: -2px; }
+.main td.dayoff{ background: #ffecec; }
+.main td.dayOn{ background: #f0f0f0; }
+.main tr td:nth-child(6) .solar{ color: rgb(177,25,26); }
+.main tr td:nth-child(7) .solar{ color: rgb(177,25,26); }
+.main td .solar{ margin-bottom: 0.2em; font-size: 1.2em; font-weight: bold; }
+.main td .lunar{ font-size: 0.8em; }
+.main td .dayoffLabel{ font-size: 0.8em; position: absolute; top: 0; left: 0; width: 1.2em; height: 1.2em; line-height: 1.2em; background-color: rgb(177,25,26); color: #fff; }
+.main td .dayOnLabel{ font-size: 0.8em; position: absolute; top: 0; left: 0; width: 1.2em; height: 1.2em; line-height: 1.2em; background-color: #7b7b7b; color: #fff; }
+.main td .festival{ color: rgb(177,25,26); }
+.main td.outMonth div{ color: #8e8e8e !important; }
+.main td.outMonth .dayoffLabel{ color: #fff  !important; background-color: #ff9797; }
+.main td.outMonth .dayOnLabel{ color: #fff  !important; background-color: #bebebe; }
+.main td.today{ background-color: #eac100; }
+.main td.today div{ color: #fff !important; }
+
+/*右侧区域*/
+.right .timeDiv{ font-size: 0.8em; height: 50px; line-height: 50px; text-align: center; color: #fff; border-bottom: 1px solid #fff; }
+.right .dateDiv{ font-size: 0.8em; border-bottom: 1px solid #fff; padding-bottom: 1em; }
+.right .dateDiv .date{ height: 40px; line-height: 40px; color: #fff; text-align: center; }
+.right .dateDiv .day{ color: #eac100; font-size: 5em; text-align: center; font-weight: bold; }
+.right .dateDiv .day .dayShift{ display: none; }
+.right .dateDiv .lunar{ color: #fff; font-size: 1.2em; text-align: center; }
+.right .dateDiv .festival{ color: #fff; text-align: center; margin-top: 0.5em; }
+.right .tips{ color: #d0d0d0; font-size: 0.8em; padding: 2em 0 0 0.3em; }
+.right .tips p{ line-height: 2em; }
+.right .tips .month{ margin-bottom: 0.5em; }
+.right .return{ display: none; }
+
+/*背景*/
+.sky{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #bebebe; z-index: -1; overflow: hidden; }
+.sky .petal{ width: 41px; height: 41px; position: absolute; background-size: cover; z-index: -1; top: -41px; opacity: 100; }

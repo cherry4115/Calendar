@@ -1,0 +1,35 @@
+/*
+* 样式表，针对手机页面
+*/
+
+.wrapper{ width: 95%; margin: 1em auto 0 auto; }
+.left{ width: 96%; padding: 2%; }
+.header{ height: 4.6em; }
+.header .select{ margin: 2.5em 0 0 0; width: 45%; }
+.header .selectMonth{ float: right; }
+.header .select .pre{ width: 17%; height: 1.6em; line-height: 1.6em; }
+.header .select .current{ width: 61%; }
+.header .select .current .number{ width: 75%; text-align: center; height: 2em; line-height: 2em; }
+.header .select .current .arrow{ width: 25%; height: 1.6em; }
+.header .select .next{ float: right; width: 17%; height: 1.6em; line-height: 1.6em; }
+.header .goToday{ position: absolute; width: 25%; height: 2em; line-height: 2em; margin-top: 0; }
+.header .timeDiv2{ display: block; position: absolute; right: 5%; height: 2em; line-height: 2em; font-size: 0.8em; }
+.header .select .dropDown{ left: 17%; width: 64.5%; font-size: 1em; }
+.header .select .dropDown ul li{ height: 30px; line-height: 30px; }
+.header .select .dropDownYear{ height: 360px; }
+.main th{ display: inline-block; width: 14%; height: 2.5em; line-height: 2.5em; }
+.main td{ display: inline-block; width: 14%; height: 3.5em; }
+.main td:hover{ width: 14%; height: 3.6em; border: 0 solid #eac100; }
+.main td:hover .dayoffLabel{ top: 0; left: 0; }
+.main td:hover .dayOnLabel{ top: 0; left: 0; }
+.main td .solar{ margin-top: 0.5em; }
+.right{ display: none; width: 75%; height: auto; padding: 2% 10% 5%; position: absolute; }
+.right .return{ display: block; }
+.right .return #returnObj{ color: #fff; font-size: 1em; font-weight: bold; padding: 0.5em 0.5em 0.5em 0; }
+.right .timeDiv{ font-size: 1em; height: 3em; line-height: 3em; border-bottom: 2px solid #fff; }
+.right .dateDiv{ font-size: 1em; border-bottom: 2px solid #fff; }
+.right .dateDiv .date{ height: 3em; line-height: 3em; }
+.right .dateDiv .day .dayShift{ display: inline; color: #fff; font-weight: normal; float: left; }
+.right .dateDiv .day .dayShiftRight{ float: right; }
+.right .tips{ font-size: 1em; }
+.sky{ display: none; }
