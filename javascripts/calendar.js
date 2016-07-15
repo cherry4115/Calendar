@@ -1200,7 +1200,7 @@ function move(obj){
  * 飘落花瓣函数
  */
 function showPetals(){
-    urlArr = ["Public/images/petal1.png","Public/images/petal2.png","Public/images/petal3.png","Public/images/petal4.png","Public/images/petal5.png","Public/images/petal6.png"];
+    urlArr = ["images/petal1.png","images/petal2.png","images/petal3.png","images/petal4.png","images/petal5.png","images/petal6.png"];
     for(var i = 0; i < 6; i++){
         for(var j = 0; j < 3; j++){
             petalNode = document.createElement("div");
