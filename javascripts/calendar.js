@@ -1178,66 +1178,21 @@ function documentEvent(){
 
 
 /*
- * 封装好的获取样式的函数
+ * 花瓣的运动轨迹
  */
-function getStyle(obj,attr){
-    if(obj.currentStyle){
-        return obj.currentStyle[attr];  //针对IE
-    }else{
-        return getComputedStyle(obj,false)[attr];  //针对Firefox
-    }
-}
-
-
-/*
- * 运动框架
- */
-function Move(obj, json, callback){
-    var flag = true;  //标志变量，为true表示所有运动都到达目标值
-    clearInterval(obj.timer);
-    obj.timer = setInterval(function(){
-        flag = true;
-        for(var attr in json){
-            //获取当前值
-            var curr = 0;
-            if(attr == 'opacity'){
-                //parseFloat可解析字符串返回浮点数，round四舍五入
-                curr = Math.round(parseFloat(getStyle(obj,attr))*100);
-            }else{
-                //parseInt可解析字符串返回整数
-                curr = parseInt(getStyle(obj, attr));  
-            }
-            var speed=(json[attr]-curr)/150;
-            speed=speed>0?Math.ceil(speed):Math.floor(speed);
-            //检测是否停止
-            if(curr != json[attr]){
-                flag=false;  //有一个属性未达目标值，就把flag变成false
-            }
-            if(attr == 'opacity'){
-                obj.style.filter = 'alpha(opacity:'+(curr+speed)+')';  //针对IE
-                obj.style.opacity = (curr+speed)/100;  //针对Firefox和Chrome
-            }else{
-                obj.style[attr] = curr+speed+'px';
-            }
+function move(obj){
+    obj.style.left = Math.random() * (skyObj.clientWidth - 100) + 'px';
+    obj.style.top = -1 * Math.random() * 500 + 'px';
+    var self = this, startTime = Date.now(), distance = skyObj.clientHeight-obj.offsetTop, T = 5000 + Math.random()*3000;
+    requestAnimationFrame(function step(){
+        var p = Math.min( 1.0, (Date.now() - startTime) / T );
+        if(p >= 1.0){
+            startTime = Date.now();
+            obj.style.left = 50 + Math.random() * (skyObj.clientWidth - 100) + 'px';
         }
-        if(flag){
-            clearInterval(obj.timer);
-            if(callback){
-                callback();
-            }
-        }
-    },30);
-}
-
-
-/*
- * 删除本身节点
- */
-function removeElement(_element){
-    var _parentElement = _element.parentNode;
-        if(_parentElement){
-            _parentElement.removeChild(_element);
-    }
+        obj.style.transform = 'translate(' + 100*p + 'px,'  + (distance * p) +'px)';
+        requestAnimationFrame(step);
+    });
 }
 
 
@@ -1245,22 +1200,16 @@ function removeElement(_element){
  * 飘落花瓣函数
  */
 function showPetals(){
-    setInterval(function(){
-        urlArr = ["images/petal1.png","images/petal2.png","images/petal3.png","images/petal4.png","images/petal5.png","images/petal6.png"];
-        urlIndex = Math.floor(Math.random()*6);
-        url = urlArr[urlIndex];
-        var petalNode = document.createElement("div");
-        petalNode.className = "petal";
-        petalNode.style.backgroundImage = "url("+url+")";
-        var startLeft =  Math.floor(Math.random()*skyObj.clientWidth - 100);
-        petalNode.style.left = startLeft +'px';
-        var endLeft = Math.floor(startLeft - 100 + Math.random()*500);
-        var endTop = skyObj.clientHeight - 40;
-        skyObj.appendChild(petalNode);
-        Move(petalNode,{'left':endLeft,'top':endTop,'opacity':50},function(){
-            removeElement(petalNode);
-        });
-    },700)
+    urlArr = ["Public/images/petal1.png","Public/images/petal2.png","Public/images/petal3.png","Public/images/petal4.png","Public/images/petal5.png","Public/images/petal6.png"];
+    for(var i = 0; i < 6; i++){
+        for(var j = 0; j < 3; j++){
+            petalNode = document.createElement("div");
+            petalNode.className = "petal";
+            petalNode.style.backgroundImage = "url(" + urlArr[i] + ")";
+            skyObj.appendChild(petalNode);
+            move(petalNode);
+        }
+    }
 }
 
 
