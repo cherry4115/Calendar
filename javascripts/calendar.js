@@ -1217,6 +1217,8 @@ function showPetals(){
  * 页面加载函数
  */
 window.onload=function(){
+    alert(document.documentElement.clientWidth);
+    alert(window.innerWidth);
     //初始化数据
     initDatas();
 
