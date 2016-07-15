@@ -959,10 +959,8 @@ function showRightDate(dateArg){
     //存储星期字符串的数组
     var weekday = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"];
     rightDateObj.innerHTML = year + '-' + month + '-' + day + ' ' + weekday[weekIndex];
-    //rightDayObj.innerHTML = day;
-    rightDayObj.innerHTML = document.documentElement.clientWidth;
-    //rightLunarObj.innerHTML = lunar;
-    rightLunarObj.innerHTML = window.innerWidth;
+    rightDayObj.innerHTML = day;
+    rightLunarObj.innerHTML = lunar;
     rightFestivalObj.innerHTML = isFestivalFuc(dateArg, lunar);
     showTipsFuc(month);
 }
