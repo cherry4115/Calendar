@@ -959,8 +959,10 @@ function showRightDate(dateArg){
     //存储星期字符串的数组
     var weekday = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"];
     rightDateObj.innerHTML = year + '-' + month + '-' + day + ' ' + weekday[weekIndex];
-    rightDayObj.innerHTML = day;
-    rightLunarObj.innerHTML = lunar;
+    //rightDayObj.innerHTML = day;
+    rightDayObj.innerHTML = document.documentElement.clientWidth;
+    //rightLunarObj.innerHTML = lunar;
+    rightLunarObj.innerHTML = window.innerWidth;
     rightFestivalObj.innerHTML = isFestivalFuc(dateArg, lunar);
     showTipsFuc(month);
 }
@@ -1217,8 +1219,6 @@ function showPetals(){
  * 页面加载函数
  */
 window.onload=function(){
-    alert(document.documentElement.clientWidth);
-    alert(window.innerWidth);
     //初始化数据
     initDatas();
 
