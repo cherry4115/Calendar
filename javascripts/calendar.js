@@ -735,7 +735,7 @@ function createCalendar(){
     var dateStr;
     //月前部分
     for(var i=0; i<thisWeekNum-1; i++){
-        tdObjArr[N].childNodes[0].innerHTML = daysOfPreMonth-thisWeekNum+2+i; //阳历
+        tdObjArr[N].getElementsByTagName('div')[0].innerHTML = daysOfPreMonth-thisWeekNum+2+i; //阳历
         tdObjArr[N].className += ' outMonth';
         if( thisMonthObj.innerHTML.slice(0,-1) == 1 ){ //如果当前月份是1月，则月前为上一年的12月
             dateStr = (thisYearObj.innerHTML.slice(0,-1)-1) + '/' + 12 + '/' + (daysOfPreMonth-thisWeekNum+2+i);
@@ -743,19 +743,19 @@ function createCalendar(){
             dateStr = thisYearObj.innerHTML.slice(0,-1) + '/' + (thisMonthObj.innerHTML.slice(0,-1)-1) + '/' + (daysOfPreMonth-thisWeekNum+2+i);
         }
         tdObjArr[N].setAttribute('data-date',dateStr);
-        tdObjArr[N].childNodes[1].innerHTML = getLunarStr(dateStr).slice(-2); //农历
+        tdObjArr[N].getElementsByTagName('div')[1].innerHTML = getLunarStr(dateStr).slice(-2); //农历
         //节日
         var festivelName = isFestivalFuc(dateStr, getLunarStr(dateStr));
         if(festivelName != ""){
             //去除两边的空格
             festivelName = festivelName.replace(/(^\s*)|(\s*$)/g, "");
             if(festivelName.length > 3){
-                tdObjArr[N].childNodes[1].setAttribute('title',festivelName);
-                tdObjArr[N].childNodes[1].innerHTML = festivelName.slice(0,2) + '..'; //节日
+                tdObjArr[N].getElementsByTagName('div')[1].setAttribute('title',festivelName);
+                tdObjArr[N].getElementsByTagName('div')[1].innerHTML = festivelName.slice(0,2) + '..'; //节日
             }else{
-                tdObjArr[N].childNodes[1].innerHTML = festivelName; //节日
+                tdObjArr[N].getElementsByTagName('div')[1].innerHTML = festivelName; //节日
             }
-            tdObjArr[N].childNodes[1].className += ' festival';
+            tdObjArr[N].getElementsByTagName('div')[1].className += ' festival';
         }
         //假日安排
         if(isDayoffFuc(dateStr) == 1){
