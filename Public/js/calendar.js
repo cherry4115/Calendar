@@ -238,7 +238,7 @@ function createTDsFuc(){
     for(var i=0; i<6; i++){
         var newNode = document.createElement("tr");
         newNode.className = "newCreate";
-        var tdNode = '<td><div class="solar"></div><div class="lunar"></div></td>'
+        var tdNode = "<td><div class='solar'></div><div class='lunar'></div></td>";
         newNode.innerHTML = tdNode + tdNode + tdNode +tdNode + tdNode + tdNode + tdNode;
         tbodyObj.appendChild(newNode);
     }
