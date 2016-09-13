@@ -1184,37 +1184,6 @@ function documentEvent(){
     }
 }
 
-/**
- * requestAnimationFrame兼容性扩展，两方面工作：
- * 1、把各浏览器前缀进行统一
- * 2、在浏览器没有requestAnimationFrame方法时将其指向setTimeout方法
- * */
-function RAF_compat() {
-    var lastTime = 0;
-    var vendors = ["webkit", "moz"];
-    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x] + "RequestAnimationFrame"];
-        // Webkit中此取消方法的名字变了
-        window.cancelAnimationFrame = window[vendors[x] + "CancelAnimationFrame"] || window[vendors[x] + "CancelRequestAnimationFrame"];
-    }
-    if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = function(callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
-            var id = window.setTimeout(function() {
-                callback(currTime + timeToCall);
-            }, timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-    }
-    if (!window.cancelAnimationFrame) {
-        window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
-        };
-    }
-}
-
 
 /*
  * 花瓣的运动轨迹
@@ -1239,6 +1208,8 @@ function move(obj){
  * 飘落花瓣函数
  */
 function showPetals(){
+    if (!window.requestAnimationFrame)
+        return;
     urlArr = ["images/petal1.png","images/petal2.png","images/petal3.png","images/petal4.png","images/petal5.png","images/petal6.png"];
     for(var i = 0; i < 6; i++){
         for(var j = 0; j < 3; j++){
@@ -1279,9 +1250,6 @@ window.onload=function(){
 
     //调用事件函数
     documentEvent();
-
-    //requestAnimationFrame兼容性扩展
-    RAF_compat();
 
     //飘落花瓣
     showPetals();
