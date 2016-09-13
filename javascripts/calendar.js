@@ -238,8 +238,16 @@ function createTDsFuc(){
     for(var i=0; i<6; i++){
         var newNode = document.createElement("tr");
         newNode.className = "newCreate";
-        var tdNode = '<td><div class="solar"></div><div class="lunar"></div></td>'
-        newNode.innerHTML = tdNode + tdNode + tdNode +tdNode + tdNode + tdNode + tdNode;
+        for(var j=0; j<7; j++){
+            var tdNode = document.createElement("td");
+            var div1 = document.createElement("div");
+            div1.className = "solar";
+            var div2 = document.createElement("div");
+            div2.className = "lunar";
+            tdNode.appendChild(div1);
+            tdNode.appendChild(div2);
+            newNode.appendChild(tdNode);
+        }
         tbodyObj.appendChild(newNode);
     }
     tbodyObj.setAttribute('data-tag','1');
@@ -735,7 +743,7 @@ function createCalendar(){
     var dateStr;
     //月前部分
     for(var i=0; i<thisWeekNum-1; i++){
-        tdObjArr[N].getElementsByTagName('div')[0].innerHTML = daysOfPreMonth-thisWeekNum+2+i; //阳历
+        tdObjArr[N].childNodes[0].innerHTML = daysOfPreMonth-thisWeekNum+2+i; //阳历
         tdObjArr[N].className += ' outMonth';
         if( thisMonthObj.innerHTML.slice(0,-1) == 1 ){ //如果当前月份是1月，则月前为上一年的12月
             dateStr = (thisYearObj.innerHTML.slice(0,-1)-1) + '/' + 12 + '/' + (daysOfPreMonth-thisWeekNum+2+i);
@@ -743,19 +751,19 @@ function createCalendar(){
             dateStr = thisYearObj.innerHTML.slice(0,-1) + '/' + (thisMonthObj.innerHTML.slice(0,-1)-1) + '/' + (daysOfPreMonth-thisWeekNum+2+i);
         }
         tdObjArr[N].setAttribute('data-date',dateStr);
-        tdObjArr[N].getElementsByTagName('div')[1].innerHTML = getLunarStr(dateStr).slice(-2); //农历
+        tdObjArr[N].childNodes[1].innerHTML = getLunarStr(dateStr).slice(-2); //农历
         //节日
         var festivelName = isFestivalFuc(dateStr, getLunarStr(dateStr));
         if(festivelName != ""){
             //去除两边的空格
             festivelName = festivelName.replace(/(^\s*)|(\s*$)/g, "");
             if(festivelName.length > 3){
-                tdObjArr[N].getElementsByTagName('div')[1].setAttribute('title',festivelName);
-                tdObjArr[N].getElementsByTagName('div')[1].innerHTML = festivelName.slice(0,2) + '..'; //节日
+                tdObjArr[N].childNodes[1].setAttribute('title',festivelName);
+                tdObjArr[N].childNodes[1].innerHTML = festivelName.slice(0,2) + '..'; //节日
             }else{
-                tdObjArr[N].getElementsByTagName('div')[1].innerHTML = festivelName; //节日
+                tdObjArr[N].childNodes[1].innerHTML = festivelName; //节日
             }
-            tdObjArr[N].getElementsByTagName('div')[1].className += ' festival';
+            tdObjArr[N].childNodes[1].className += ' festival';
         }
         //假日安排
         if(isDayoffFuc(dateStr) == 1){
@@ -971,7 +979,7 @@ function showRightDate(dateArg){
  * 参数：disid 显隐的div的id，thisobj 点击的触发对象
  */
 function clickShowDiv(disid,thisobj){
-	if(!thisobj) return;
+    if(!thisobj) return;
 
     //获取显隐的回调函数
     var showfun=arguments[2] || "";
@@ -1039,8 +1047,8 @@ function clickShowDiv(disid,thisobj){
  * 显隐函数
  */
 function showHide(){
-	//年份下拉框的显示和隐藏
-	var yearDropDown = new clickShowDiv( 'dropDownYearObj', yearObj, function(){
+    //年份下拉框的显示和隐藏
+    var yearDropDown = new clickShowDiv( 'dropDownYearObj', yearObj, function(){
         //显示回调，设置滚动条高度
         if(isMobileFuc() == 1){
             var a = Number(thisYearObj.innerHTML.slice(0,-1));
@@ -1061,8 +1069,8 @@ function showHide(){
         }
     }, function(){} );
 
-	//月份下拉框的显示和隐藏
-	var monthDropDown = new clickShowDiv( 'dropDownMonthObj', monthObj, function(){}, function(){} );
+    //月份下拉框的显示和隐藏
+    var monthDropDown = new clickShowDiv( 'dropDownMonthObj', monthObj, function(){}, function(){} );
 }
 
 
@@ -1070,7 +1078,7 @@ function showHide(){
  * 事件函数
  */
 function documentEvent(){
-	//年份下拉框中的li的click事件
+    //年份下拉框中的li的click事件
     var yearLis = dropDownYearObj.getElementsByTagName('li');
     for(var i=0; i<yearLis.length; i++){
         yearLis[i].onclick = function(){
@@ -1178,21 +1186,66 @@ function documentEvent(){
 
 
 /*
- * 花瓣的运动轨迹
+ * 封装好的获取样式的函数
  */
-function move(obj){
-    obj.style.left = Math.random() * (skyObj.clientWidth - 100) + 'px';
-    obj.style.top = -1 * Math.random() * 500 + 'px';
-    var self = this, startTime = Date.now(), distance = skyObj.clientHeight-obj.offsetTop, T = 5000 + Math.random()*3000;
-    requestAnimationFrame(function step(){
-        var p = Math.min( 1.0, (Date.now() - startTime) / T );
-        if(p >= 1.0){
-            startTime = Date.now();
-            obj.style.left = 50 + Math.random() * (skyObj.clientWidth - 100) + 'px';
+function getStyle(obj,attr){
+    if(obj.currentStyle){
+        return obj.currentStyle[attr];  //针对IE
+    }else{
+        return getComputedStyle(obj,false)[attr];  //针对Firefox
+    }
+}
+
+
+/*
+ * 运动框架
+ */
+function Move(obj, json, callback){
+    var flag = true;  //标志变量，为true表示所有运动都到达目标值
+    clearInterval(obj.timer);
+    obj.timer = setInterval(function(){
+        flag = true;
+        for(var attr in json){
+            //获取当前值
+            var curr = 0;
+            if(attr == 'opacity'){
+                //parseFloat可解析字符串返回浮点数，round四舍五入
+                curr = Math.round(parseFloat(getStyle(obj,attr))*100);
+            }else{
+                //parseInt可解析字符串返回整数
+                curr = parseInt(getStyle(obj, attr));  
+            }
+            var speed=(json[attr]-curr)/150;
+            speed=speed>0?Math.ceil(speed):Math.floor(speed);
+            //检测是否停止
+            if(curr != json[attr]){
+                flag=false;  //有一个属性未达目标值，就把flag变成false
+            }
+            if(attr == 'opacity'){
+                obj.style.filter = 'alpha(opacity:'+(curr+speed)+')';  //针对IE
+                obj.style.opacity = (curr+speed)/100;  //针对Firefox和Chrome
+            }else{
+                obj.style[attr] = curr+speed+'px';
+            }
         }
-        obj.style.transform = 'translate(' + 100*p + 'px,'  + (distance * p) +'px)';
-        requestAnimationFrame(step);
-    });
+        if(flag){
+            clearInterval(obj.timer);
+            if(callback){
+                callback();
+            }
+        }
+    },30);
+}
+
+
+/*
+ * 删除本身节点
+ */
+function removeElement(_element){
+    var _parentElement = _element.parentNode;
+        if(_parentElement){
+            _parentElement.removeChild(_element);
+    }
 }
 
 
@@ -1200,16 +1253,22 @@ function move(obj){
  * 飘落花瓣函数
  */
 function showPetals(){
-    urlArr = ["images/petal1.png","images/petal2.png","images/petal3.png","images/petal4.png","images/petal5.png","images/petal6.png"];
-    for(var i = 0; i < 6; i++){
-        for(var j = 0; j < 3; j++){
-            petalNode = document.createElement("div");
-            petalNode.className = "petal";
-            petalNode.style.backgroundImage = "url(" + urlArr[i] + ")";
-            skyObj.appendChild(petalNode);
-            move(petalNode);
-        }
-    }
+    setInterval(function(){
+        urlArr = ["Public/images/petal1.png","Public/images/petal2.png","Public/images/petal3.png","Public/images/petal4.png","Public/images/petal5.png","Public/images/petal6.png"];
+        urlIndex = Math.floor(Math.random()*6);
+        url = urlArr[urlIndex];
+        var petalNode = document.createElement("div");
+        petalNode.className = "petal";
+        petalNode.style.backgroundImage = "url("+url+")";
+        var startLeft =  Math.floor(Math.random()*skyObj.clientWidth - 100);
+        petalNode.style.left = startLeft +'px';
+        var endLeft = Math.floor(startLeft - 100 + Math.random()*500);
+        var endTop = skyObj.clientHeight - 40;
+        skyObj.appendChild(petalNode);
+        Move(petalNode,{'left':endLeft,'top':endTop,'opacity':50},function(){
+            removeElement(petalNode);
+        });
+    },700)
 }
 
 
@@ -1235,11 +1294,11 @@ window.onload=function(){
     //调用显示时间的函数
     showNowTime();
 
-	//调用显隐函数
-	showHide();
+    //调用显隐函数
+    showHide();
 
-	//调用事件函数
-	documentEvent();
+    //调用事件函数
+    documentEvent();
 
     //飘落花瓣
     showPetals();
