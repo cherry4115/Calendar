@@ -230,9 +230,29 @@ function createTDsFuc(){
     var tbodyObj = document.getElementById('tbodyObj');
     var dataTag = tbodyObj.getAttribute('data-tag');
     if(dataTag == '1'){  //之前创建过了，需要先删除之前的
-        oldTRs = document.getElementsByClassName("newCreate");
-        for(var j=0; j<6; j++){
-            tbodyObj.removeChild(oldTRs[0]);
+        if(!document.getElementsByClassName){
+            while(tbodyObj.hasChildNodes())
+                tbodyObj.removeChild(tbodyObj.firstChild);
+            var uptr = document.createElement("tr");
+            for(var j=0; j<7; j++){
+                var upth = document.createElement("th");
+                var weekTag;
+                switch (j) {
+                    case '0':   weekTag = '一'; break;
+                    case '1':   weekTag = '二'; break;
+                    case '2':   weekTag = '三'; break;
+                    case '3':   weekTag = '四'; break;
+                    case '4':   weekTag = '五'; break;
+                    case '5':   weekTag = '六'; break;
+                    case '6':   weekTag = '七'; break;
+                }
+                upth.innerHTML = weekTag;
+            }
+        }else{
+            oldTRs = document.getElementsByClassName("newCreate");
+            for(var j=0; j<6; j++){
+                tbodyObj.removeChild(oldTRs[0]);
+            }
         }
     }
     for(var i=0; i<6; i++){
