@@ -256,7 +256,10 @@ function createTDsFuc(){
     var tbodyObj = document.getElementById('tbodyObj');
     var dataTag = tbodyObj.getAttribute('data-tag');
     if(dataTag == '1'){ //之前创建过了，需要先删除之前的
-        oldTRs = document.getElementsByClassName('newCreate');
+        if (document.getElementsByClassName)
+            oldTRs = document.getElementsByClassName('newCreate');
+        else
+            oldTRs = getElementsByClassName('newCreate');
         for(var j=0; j<6; j++){
             tbodyObj.removeChild(oldTRs[0]);
         }
