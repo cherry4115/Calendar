@@ -229,9 +229,9 @@ function daysOfThisMonthFuc(thisMonth){
 function createTDsFuc(){
     var tbodyObj = document.getElementById('tbodyObj');
     var dataTag = tbodyObj.getAttribute('data-tag');
-    if(dataTag == '1'){ //之前创建过了，需要先删除之前的
-        oldTRs = tbodyObj.childNodes("tr");
-        for(var j=1; j<7; j++){
+    if(dataTag == '1'){  //之前创建过了，需要先删除之前的
+        oldTRs = document.getElementsByClassName("newCreate");
+        for(var j=0; j<6; j++){
             tbodyObj.removeChild(oldTRs[0]);
         }
     }
