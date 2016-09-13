@@ -165,6 +165,59 @@ function isLeapYearFuc(){
 
 
 /*
+ * 解决IE8-不支持getElementsByClassName的问题
+ */
+function getElementsByClassName(className){
+    if(document.getElementsByClassName)
+        return document.getElementsByClassName(className);
+    else{
+        var childrens = document.getElementsByTagName('*');
+        var results = new Array();
+        for(var i=0; i<childrens.length; i++){
+            var classNames = childrens[i].className.split(' ');
+            for(var j=0; j<classNames.length; j++){
+                if(classNames[j] == className){
+                    results.push(childrens[i]);
+                    break;
+                }
+            }
+        }
+        return results;
+    }
+}
+
+
+/*
+ * 创建所有的td元素
+ */
+function createTDsFuc2(){
+    var tbodyObj = document.getElementById('tbodyObj');
+    var dataTag = tbodyObj.getAttribute('data-tag');
+    if(dataTag == '1'){  //之前创建过了，需要先删除之前的
+        oldTRs = getElementsByClassName("newCreate");
+        for(var j=0; j<6; j++)
+            tbodyObj.removeChild(oldTRs[0]);
+    }
+    for(var i=0; i<6; i++){
+        var newNode = document.createElement("tr");
+        newNode.className = "newCreate";
+        for(var j=0; j<7; j++){
+            var tdNode = document.createElement("td");
+            var div1 = document.createElement("div");
+            div1.className = "solar";
+            var div2 = document.createElement("div");
+            div2.className = "lunar";
+            tdNode.appendChild(div1);
+            tdNode.appendChild(div2);
+            newNode.appendChild(tdNode);
+        }
+        tbodyObj.appendChild(newNode);
+    }
+    tbodyObj.setAttribute('data-tag','1');
+}
+
+
+/*
  * 计算某年某月的1号是星期几
  */
 function weekForDate1(date_str){
@@ -203,6 +256,7 @@ function weekForDate1(date_str){
     }
     return thisWeekNum;
 }
+
 
 /*
  * 计算某月共有多少天
@@ -250,9 +304,8 @@ function createTDsFuc(){
             }
         }else{
             oldTRs = document.getElementsByClassName("newCreate");
-            for(var j=0; j<6; j++){
+            for(var j=0; j<6; j++)
                 tbodyObj.removeChild(oldTRs[0]);
-            }
         }
     }
     for(var i=0; i<6; i++){
