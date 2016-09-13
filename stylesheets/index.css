@@ -10,7 +10,7 @@
 .header{ height: 50px; border-bottom: 1px solid rgb(177,25,26); }
 
 /*头部*/
-.header .select{ position: relative; margin: 7px 20px 0 0; float: left; border-top: 1px solid #7b7b7b; border-left: 1px solid #7b7b7b; border-right: 1px solid #7b7b7b; border-bottom: 1px solid #adadad; }
+.header .select{ position: relative; margin: 7px 20px 0 0; float: left; border-top: 1px solid #7b7b7b; border-left: 1px solid #7b7b7b; border-right: 1px solid #7b7b7b; border-bottom: 1px solid #adadad; z-index: 10; }
 .header .select:after{ content:'\20'; display:block; height:0; clear:both; }
 .header .select div{ float: left; }
 .header .select .pre{ cursor: pointer; width: 25px; height: 25px; line-height: 25px; text-align: center; border-right: 1px solid #adadad; }
